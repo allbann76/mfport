@@ -1,6 +1,7 @@
-const express = require('express');
+'use strict';
 
-const app = express()
+const express = require('express');
+const app = express();
 
 const {
     port
@@ -11,6 +12,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Started app on http://localhost:${port}`);
-})
-
+    console.log(`Started app on http://localhost:${port}`); // eslint-disable-line no-console
+});
