@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/allbann76/mfport/issues"
   },
-  "homepage": "https://github.com/allbann76/mfport#readme"
+  "homepage": "https://github.com/allbann76/mfport#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "colors": "^1.1.2",
+    "express": "^4.15.2"
+  }
 }
