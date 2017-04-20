@@ -2,13 +2,19 @@
 
 const express = require('express');
 const app = express();
+const loger = require('./middlwares/loger.js');
+
 
 const {
-    port
+    port,logFile
 } = require('./config');
+
+
+app.use(loger);
 
 app.get('/', (req, res) => {
     res.send('hello');
+    console.log('send data at  '+Date.now());
 });
 
 app.listen(port, () => {
