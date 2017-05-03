@@ -63,7 +63,7 @@
             "never"
         ],
         "consistent-return": "off",
-        "consistent-this": "error",
+        "consistent-this": "off",
         "curly": "error",
         "default-case": "off",
         "dot-location": [

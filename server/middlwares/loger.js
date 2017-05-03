@@ -7,7 +7,7 @@ const {
 } = require('../config.js');
 
 module.exports = function (req, res, next) {
-    let logData = `${req.url}|${req.method}|${Date.now()}\n`;
+    let logData = `${req.url} | ${req.method} | ${Date.now()}\n`;
 
     fs.appendFile(logFile, logData, err => {
         if (err) {

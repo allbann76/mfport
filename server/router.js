@@ -1,57 +1,57 @@
 'use strict';
 
-const {resolve} = require('path');
+const Controller = require('./controller/');
 
 const ROUTES = {
-    '/': [
-        {
-            method: 'get',
-            controller: staticController,
+    '/': {
+        get: staticController({
             page: 'index'
-        },
-        {
-            method: 'post',
-            controller: staticControllerPost,
-            page: 'index'  
-        }
-    ],
-    '/about': [
-        {
-            method: 'get',
-            controller: staticController,
-            page: 'about'
-        }
-    ]
-}
+        }),
+        post: staticController({
+            page: 'index'
+        })
+    },
+    '/about': {
+        get: staticController({
+            page: 'about',
+        })
+    },
+};
 
+/**
+ * @public
+ * @param {express.app} app
+  */
 function router(app) {
     Object.keys(ROUTES).forEach(route => {
-        const methods = ROUTES[route];
+        const methods = Object.keys(ROUTES[route]);
 
-        methods.forEach(params => {
+        methods.forEach(method => {
+            const controller = ROUTES[route][method];
 
-            /**
-             *  params = {
-                    method: <string>,
-                    controller: <function>,
-                    page: <string>
-                }
-             */
-            app[params.method](route, function (req, res, next) {
-                req.page = params.page;
-                params.controller(req, res, next);
+            app[method](route, function (req, res, next) {
+                controller.response(req, res, next);
             });
 
         });
     });
 }
 
-function staticController(req, res, next) {
-    res.sendFile(resolve(`./static/${req.page}.html`));
-}
-
-function staticControllerPost(req, res, next){
-    res.send('POsds')
+/**
+ * @private
+ * @param {object} params
+ * @return {Controller}
+ */
+function staticController(params) {
+    return new Controller(params)
+        .printProp('$$delayed', 0)
+        .delay(2000)
+        .printProp('$$delayed')
+        .update({allahu: 'akbar'})
+        .delay(300)
+        .printProp('allahu')
+        .printProp('$$delayed')
+        .send(() => 'Hello');
 }
 
 module.exports = router;
