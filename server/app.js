@@ -1,21 +1,22 @@
 'use strict';
 
 const express = require('express');
-const app = express();
-const loger = require('./middlwares/loger.js');
+const bodyParser = require('body-parser');
 
+const loger = require('./middlwares/loger.js');
+const router = require('./router');
+
+const app = express();
 
 const {
-    port,logFile
+    port
 } = require('./config');
 
-
+app.use(bodyParser());
+app.use(express.static('static'));
 app.use(loger);
 
-app.get('/', (req, res) => {
-    res.send('hello');
-    console.log('send data at  '+Date.now());
-});
+router(app);
 
 app.listen(port, () => {
     console.log(`Started app on http://localhost:${port}`); // eslint-disable-line no-console
